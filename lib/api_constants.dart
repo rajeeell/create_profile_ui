@@ -1,5 +1,6 @@
+import 'package:flutter_auth_rest_api/model/api_response.dart';
+
 class apiConstants {
-  
   static String API_KEY = "AIzaSyDpGhzkSQb1X2Jij4pxy2EXYC3lorZS3q8";
 
   static String base_url =
@@ -8,5 +9,5 @@ class apiConstants {
   static String api_SignIn = "${base_url}signInWithPassword?key=$API_KEY";
   static String api_ForgetPassword = "${base_url}sendOobCode?key=$API_KEY";
   static String api_ChangePassword = "${base_url}update?key=$API_KEY";
-    
+  static String api_UpdateUserData = "${base_url}update?key=$API_KEY";
 }

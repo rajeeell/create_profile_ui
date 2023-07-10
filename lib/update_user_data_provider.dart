@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_rest_api/api_constants.dart';
+import 'package:flutter_auth_rest_api/auth_screen.dart';
 import 'package:flutter_auth_rest_api/keys.dart';
 import 'package:flutter_auth_rest_api/model/auth_error.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,6 +50,15 @@ class UpdateUserDataProvider extends ChangeNotifier {
     }
   }
 
+  logOut(BuildContext context) async {
+    final navigator = Navigator.of(context);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.remove("userData");
+    navigator.push(MaterialPageRoute(builder: (_) {
+      return const AuthScreen();
+    }));
+  }
+
   changePassword() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? userData = sharedPreferences.getString("userData");
@@ -71,11 +81,11 @@ class UpdateUserDataProvider extends ChangeNotifier {
       sharedPreferences.setString("userData", jsonEncode(apiResponse.toJson()));
 
       ApiResponce _response = ApiResponce.fromJson(jsonDecode(response.body));
-      Keys.snackBar("Password change successfully",false);
+      Keys.snackBar("Password change successfully", false);
     } else {
       AuthError authError = AuthError.fromJson(jsonDecode(response.body));
       print(authError.error!.message);
-      Keys.snackBar(authError.error!.message.toString(),true);
+      Keys.snackBar(authError.error!.message.toString(), true);
     }
   }
 }

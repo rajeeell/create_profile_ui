@@ -9,48 +9,51 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UpdateUserDataProvider(),
-      child: Consumer<UpdateUserDataProvider>(builder: (context, provider, _) {
-        return Scaffold(
-          appBar: AppBar(title: const Text("Update Profile data")),
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomTextField(
-                  controller: provider.changePasswordController,
-                  hintText: "Password",
-                  iconData: Icons.password,
+    return Consumer<UpdateUserDataProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("Update Profile data")),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextField(
+                controller: provider.changePasswordController,
+                hintText: "Password",
+                iconData: Icons.password,
+              ),
+              AuthButton(
+                title: "Change password",
+                onTap: provider.changePassword,
+              ),
+              const Divider(),
+              CustomTextField(
+                  controller: provider.userNameController,
+                  iconData: Icons.person,
+                  hintText: "Username"),
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: provider.loadImage,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [Text("Load image"), Icon(Icons.add)],
                 ),
-                AuthButton(
-                  title: "Change password",
-                  onTap: provider.changePassword,
-                ),
-                const Divider(),
-                CustomTextField(
-                    controller: provider.userNameController,
-                    iconData: Icons.person,
-                    hintText: "Username"),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: provider.loadImage,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [Text("Load image"), Icon(Icons.add)],
-                  ),
-                ),
-                if (provider.photoUrl.isNotEmpty)
-                  Image.network(provider.photoUrl, height: 100),
-                AuthButton(onTap: provider.updateData, title: "Update info")
-              ],
-            ),
+              ),
+              if (provider.photoUrl.isNotEmpty)
+                Image.network(provider.photoUrl, height: 100),
+              AuthButton(onTap: provider.updateData, title: "Update info"),
+              const Divider(),
+              AuthButton(
+                  title: "Log Out",
+                  onTap: () {
+                    provider.logOut(context);
+                  }),
+            ],
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
