@@ -4,11 +4,11 @@ class Keys {
   static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey();
 
-  static snackBar(String message) {
+  static snackBar(String message, bool isError) {
     Keys.scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red,
+        backgroundColor: isError ?Colors.red:Colors.green,
       ),
     );
   }

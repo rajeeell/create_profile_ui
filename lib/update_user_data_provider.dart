@@ -38,7 +38,7 @@ class UpdateUserDataProvider extends ChangeNotifier {
       ApiResponce apiResponse = ApiResponce.fromJson(jsonDecode(userData));
 
       final response =
-          await http.post(Uri.parse(apiConstants.apiUpdateUserDate),
+          await http.post(Uri.parse(apiConstants.api_ChangePassword),
               body: jsonEncode({
                 "idToken": apiResponse.idToken,
                 "displayName": userNameController.text,
@@ -55,7 +55,7 @@ class UpdateUserDataProvider extends ChangeNotifier {
     ApiResponce apiResponseLocal = ApiResponce.fromJson(jsonDecode(userData!));
 
     final response = await http.post(
-      Uri.parse(ApiResponce.apiChangePassword),
+      Uri.parse(apiConstants.api_ChangePassword),
       body: jsonEncode({
         "idToken": apiResponseLocal.idToken,
         "password": changePasswordController.text,
@@ -72,7 +72,6 @@ class UpdateUserDataProvider extends ChangeNotifier {
 
       ApiResponce _response = ApiResponce.fromJson(jsonDecode(response.body));
       Keys.snackBar("Password change successfully",false);
-
     } else {
       AuthError authError = AuthError.fromJson(jsonDecode(response.body));
       print(authError.error!.message);

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_rest_api/auth_provider.dart';
 import 'package:flutter_auth_rest_api/auth_screen.dart';
@@ -31,8 +32,12 @@ class MyApp extends StatelessWidget {
                   return snapshot.hasData
                       ? snapshot.data!
                           ? const HomeScreen()
-                          : AuthScreen()
-                      : const Scaffold();
+                          : const AuthScreen()
+                      : const Scaffold(
+                          body: Center(
+                            child: Text("Waiting"),
+                          ),
+                        );
                 });
           })),
     );
